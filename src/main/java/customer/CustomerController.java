@@ -60,8 +60,7 @@ public class CustomerController {
      */
    @RequestMapping(value = "/customer/search", method =RequestMethod.GET) 
    @ResponseBody 
-   ResponseEntity<?> searchCustomers(@RequestHeaderMap<String, String> headers, @RequestParam(required=true)
-   Stringusername) {
+   ResponseEntity<?> searchCustomers(@RequestHeaderMap<String, String> headers, @RequestParam(required=true)   String username) {
    	try {
    		if (username == null) {
    			returnResponseEntity.badRequest().body("Missing username");   

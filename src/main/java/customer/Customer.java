@@ -40,10 +40,10 @@ public class Customer {
 	}
 	
 	public void setRev(String r){
-		this._rev= ;
+		this._rev=r ;
 	}
 	public void setUsername(String u){
-		this.username = u:
+		this.username = u;
 	}
 	public void setPassword(String p){
 		this.password = p;
