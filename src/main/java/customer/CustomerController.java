@@ -60,7 +60,7 @@ public class CustomerController {
      */
    @RequestMapping(value = "/customer/search", method =RequestMethod.GET) 
    @ResponseBody 
-   ResponseEntity<?> searchCustomers(@RequestHeaderMap<String, String> headers, @RequestParam(required=true)   String username) {
+   ResponseEntity<?> searchCustomers(@RequestHeader Map<String, String> headers, @RequestParam(required=true)   String username) {
    	try {
    		if (username == null) {
    			returnResponseEntity.badRequest().body("Missing username");   
@@ -82,7 +82,7 @@ public class CustomerController {
      */
    @RequestMapping(value = "/customer", method = RequestMethod.GET) 
    @ResponseBody
-   ResponseEntity<?> getCustomers(@RequestHeaderMap<String, String> hdrs) {
+   ResponseEntity<?> getCustomers(@RequestHeade rMap<String, String> hdrs) {
    	try {
    		List<Customer> allCusts =cloudant.getAllDocsRequestBuilder().includeDocs(true).build().getResponse().getDocsAs(Customer.class);
    		return ResponseEntity.ok(allCusts);
