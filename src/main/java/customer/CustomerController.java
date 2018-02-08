@@ -63,7 +63,7 @@ public class CustomerController {
    ResponseEntity<?> searchCustomers(@RequestHeader Map<String, String> headers, @RequestParam(required=true)   String username) {
    	try {
    		if (username == null) {
-   			returnResponseEntity.badRequest().body("Missing username");   
+   			return ResponseEntity.badRequest().body("Missing username");   
    		}  
    		final List<Customer> customers =cloudant.findByIndex( "{ \"selector\": { \"username\": \""+ username + "\" } }",          
    			Customer.class);              //  query index   
@@ -71,7 +71,7 @@ public class CustomerController {
    			} 
    			catch (Exception e) {
    				logger.error(e.getMessage(), e);         
-   				returnResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();   
+   				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();   
    				} 
    		}
 
@@ -88,7 +88,7 @@ public class CustomerController {
    		return ResponseEntity.ok(allCusts);
    	} catch (Exception e) {
    		logger.error(e.getMessage(), e);         
-   		returnResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();    
+   		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();    
    		}
    	}
    		
@@ -102,7 +102,7 @@ public class CustomerController {
    		final Customer cust = cloudant.find(Customer.class, id);  
    		return ResponseEntity.ok(cust);   
    		} catch (NoDocumentException e) {
-   			returnResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with ID" + id + " not found"); 
+   			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with ID" + id + " not found"); 
    		}
    	}
 
@@ -114,10 +114,10 @@ public class CustomerController {
    @RequestMapping(value = "/customer", method =RequestMethod.POST, consumes = "application/json")
    ResponseEntity<?> create(@RequestHeader Map<String, String>headers, @RequestBody Customer payload) {
    	try {
-   		if (payload.getCustomerId() != null &&cloudant.contains(payload.getCustomerId())) {
+   		if (payload.getCustomerId() != null && cloudant.contains(payload.getCustomerId())) {
    			return ResponseEntity.badRequest().body("Id " +payload.getCustomerId() + " already exists");     
    		}      
-   		final List<Customer> customers = cloudant.findByIndex(    "{ \"selector\": { \"username\": \""+ payload.getUsername() + "\" } }",          Customer.class);          if (!customers.isEmpty()) {              return ResponseEntity.badRequest().body("Customerwith name " + payload.getUsername() + " already exists");
+   		final List<Customer> customers = cloudant.findByIndex(    "{ \"selector\": { \"username\": \""+ payload.getUsername() + "\" } }", Customer.class);          if (!customers.isEmpty()) {              return ResponseEntity.badRequest().body("Customerwith name " + payload.getUsername() + " already exists");
          }          
          final Response resp = cloudant.save(payload);     
          if (resp.getError() == null) {
@@ -125,12 +125,12 @@ public class CustomerController {
          	return ResponseEntity.created(location).build();  
          	}
          	else {
-         		returnResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp.getError());
+         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp.getError());
          	}   
          } 
          catch (Exception ex) {
          	logger.error("Error creating customer: " + ex);  
-         	returnResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating customer: " + ex.toString());
+         	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating customer: " + ex.toString());
          } 
         }
 

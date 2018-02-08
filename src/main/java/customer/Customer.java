@@ -35,7 +35,9 @@ public class Customer {
 	}
 	public String getImageUrl(){
 		return this.imageUrl;
-	} public void setCustomerId(String id){
+	}
+	
+	public void setCustomerId(String id){
 		this._id = id;
 	}
 	
