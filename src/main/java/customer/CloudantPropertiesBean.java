@@ -31,7 +31,10 @@ import org.springframework.stereotype.Component;
  	
  	public void setPort(int p) {
  		this.port = p;
- 		
+ 	}
+ 	
+ 	public String getDatabase() {
+ 		return this.database;
  	}
  	
  	public void setDatabase(String db){

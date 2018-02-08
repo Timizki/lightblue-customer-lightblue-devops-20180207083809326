@@ -82,7 +82,7 @@ public class CustomerController {
      */
    @RequestMapping(value = "/customer", method = RequestMethod.GET) 
    @ResponseBody
-   ResponseEntity<?> getCustomers(@RequestHeade rMap<String, String> hdrs) {
+   ResponseEntity<?> getCustomers(@RequestHeader Map<String, String> hdrs) {
    	try {
    		List<Customer> allCusts =cloudant.getAllDocsRequestBuilder().includeDocs(true).build().getResponse().getDocsAs(Customer.class);
    		return ResponseEntity.ok(allCusts);
